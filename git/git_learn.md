@@ -157,6 +157,13 @@ Git的杀手级功能之一。找一台电脑充当服务器的角色，每天24
     切换到master分支，并在master分支上开一个issue-bug_num分支，然后就可以在该分支下进行bug修复，修复后合并到master分支上并删除issue-bug_num分支
     切回dev分支，执行git stash list查看保存的工作环境，若只有一个，可以通过git stash pop(或者git stash apply + git stash drop)命令恢复之前保存的工作环境，继续dev未完成的开发工作即可；若有多个工作环境，可以用git stash apply <name>来指定恢复到某个工作环境
 
+# 多人协作
+
+场景1: 你clone了一个git库下来，并且需要在项目上添加一个功能，具体操作步骤：
+
+    git clone <addr>：克隆下来项目的git库
+    git checkout -b dev origin/dev：默认克隆的git库在本地只能看到master分支，而开发需要在dev分支上进行，如果远程git库本来就有dev分支，则通过本条命令在本地创建dev分支，并与远程git库的dev分支关联
+    git checkout -b dev：若远程git库没有dev分支，则用该命令在本地创建dev分支，推送时不能用git push，因为远程没有与本地dev关联的分支，因此需要显示调用git push origin dev，明确告知将本地dev推送到远程，若远程没有则创建一个
 
 
 
