@@ -3,6 +3,8 @@
 $ git config --global user.name "Your Name"
 $ git config --global user.email "email@example.com"
 
+以上配置的用户名和邮箱将会出现在远程库上，例如github。每个库可以设置不同的值，只需要把--global参数去除
+
 
 # 创建仓库
 
@@ -89,7 +91,34 @@ Git的杀手级功能之一。找一台电脑充当服务器的角色，每天24
 
 # 添加远程库
 
-场景：本地已经有一个git库，需要将其放入到github远程库上进行维护
+场景：本地已经有一个git库，需要将其放入到github远程库上进行维护，步骤如下：
+
+    git init：本地初始化一个git库
+    github上创建一个git库：注意创建时不要勾选生成readme.md文件，否则关联本地库和远程库时会报冲突
+    git remote add origin git@github.com:dzhf/learning_notes.git：本地库关联到远程库origin
+    git push -u origin master：把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令
+    
+# 从远程库克隆
+
+场景：github有个他人的库，需要将其库拷贝到个人计算机上并与之关联
+
+    git clone <addr>：直接拷贝即可
+
+# 创建与合并分支
+
+因为创建、合并和删除分支非常快（只是修改指针指向），所以Git鼓励你使用分支完成某个任务，合并后再删掉分支，这和直接在master分支上工作效果是一样的，但过程更安全
+
+git branch：查看分支
+
+git branch <name>：创建分支
+
+git checkout <name>：切换分支
+
+git checkout -b <name>：创建+切换分支，-b应该是branch的缩写
+
+git merge <name>：合并某分支到当前分支
+
+git branch -d <name>：删除分支
 
 
 
