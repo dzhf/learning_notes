@@ -108,20 +108,54 @@ Git的杀手级功能之一。找一台电脑充当服务器的角色，每天24
 
 因为创建、合并和删除分支非常快（只是修改指针指向），所以Git鼓励你使用分支完成某个任务，合并后再删掉分支，这和直接在master分支上工作效果是一样的，但过程更安全
 
-git branch：查看分支
+    git branch：查看分支
 
-git branch <name>：创建分支
+    git branch <name>：创建分支
 
-git checkout <name>：切换分支
+    git checkout <name>：切换分支
 
-git checkout -b <name>：创建+切换分支，-b应该是branch的缩写
+    git checkout -b <name>：创建+切换分支，-b应该是branch的缩写
 
-git merge <name>：合并某分支到当前分支
+    git merge <name>：合并某分支到当前分支，使用fast forward模式，这种模式下，删除分支后，会丢掉分支信息
+    git merge --no-ff -m "merge with no-ff" <name>：不使用fast forward模式合并
+    
+    git log --graph --pretty=oneline --abbrev-commit：查看分支合并情况
 
-git branch -d <name>：删除分支
+    git branch -d <name>：删除已经被合并了的分支
+    git branch -D <name>：删除还未被合并过的分支
 
+# 解决冲突
 
+场景：你在feature分支修改了文件test.log的第一行后commit到git库；然后切回master分支又对test.log的第一行进行了不同的修改；最后想要将feature分支合并到master时，会导致冲突
 
+解决方案：
+
+    手动对冲突文件进行处理，对冲突区域的内容进行选择
+    对处理后的文件git add/commit，此时feature和master分支一致
+    删除feature分支
+    
+
+# 分支管理策略
+
+在实际开发中，我们应该按照几个基本原则进行分支管理：
+
+    首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+
+    干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+
+    你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
+    
+    debug分支一般取名为issue_debug_num, 新功能开发分支一般取名为feature_function
+    
+# bug分支
+
+场景：你正在dev分支上开发，开发到一半时，发现一个bug需要紧急修复上线，此时你不可以在当前dev上修复bug，也不能在当前的dev上开分支，因为你当前的工作进行到一半，如果在dev上修复bug并合并到master上，那么会把开发到一半的代码合并进去，显然是不行的。你也不能直接切换到master分支上去开分支修复bug，因为你在dev分支上开发一半的所有工作内容都没有commit过就切到master分支上了（如果commit了，那是没问题到，但是我们的前提就是dev工作到一半，不想commit），这样会导致dev上未commit的开发工作内容在master上也会被看到（包括在dev开发一半过程中新建的文件，还没有git add的留存在工作区的文件，以及git add过的留存在暂存区的文件。需要注意的是，工作区和暂存区是所有分支公用的，未commit的话，即使切换其它分支，也能看到，只有commit后，才是分支私有的），这样肯定就没法在此基础上进行修复bug了。
+
+解决方案：
+
+    在切换到master分支之前，留在dev分支上做好切换分支前的准备：将在dev分支上新建的文件都进行git add，然后用git status确保没有未untracked的文件后，执行git stash命令，保存当前工作环境，再用git status查看工作区就是干净的了
+    切换到master分支，并在master分支上开一个issue-bug_num分支，然后就可以在该分支下进行bug修复，修复后合并到master分支上并删除issue-bug_num分支
+    切回dev分支，执行git stash list查看保存的工作环境，若只有一个，可以通过git stash pop(或者git stash apply + git stash drop)命令恢复之前保存的工作环境，继续dev未完成的开发工作即可；若有多个工作环境，可以用git stash apply <name>来指定恢复到某个工作环境
 
 
 
