@@ -1,3 +1,8 @@
+# 链接分析
+
+    原文链接：https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+    git官网：https://git-scm.com/
+
 # 配置用户名、邮件信息
 
 $ git config --global user.name "Your Name"
@@ -95,7 +100,7 @@ Git的杀手级功能之一。找一台电脑充当服务器的角色，每天24
 
     git init：本地初始化一个git库
     github上创建一个git库：注意创建时不要勾选生成readme.md文件，否则关联本地库和远程库时会报冲突
-    git remote add origin git@github.com:dzhf/learning_notes.git：本地库关联到远程库origin
+    git remote add origin git@github.com:dzhf/learning_notes.git：本地库关联到远程库origin，名字可改；git remote rm origin可以删除关联，git remote -v可以查看库关联信息；一个本地库可以同时关联多个远程库，只要远程库取名不同即可，例如此处origin，相应的推送到哪个远程库也需要在git push时明确指出
     git push -u origin master：把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令
     
 # 从远程库克隆
@@ -163,7 +168,45 @@ Git的杀手级功能之一。找一台电脑充当服务器的角色，每天24
 
     git clone <addr>：克隆下来项目的git库
     git checkout -b dev origin/dev：默认克隆的git库在本地只能看到master分支，而开发需要在dev分支上进行，如果远程git库本来就有dev分支，则通过本条命令在本地创建dev分支，并与远程git库的dev分支关联
-    git checkout -b dev：若远程git库没有dev分支，则用该命令在本地创建dev分支，推送时不能用git push，因为远程没有与本地dev关联的分支，因此需要显示调用git push --set-upstream origin dev，明确告知将本地dev推送到远程，若远程没有则创建一个并与本地关联，--set-upstream参数意为进行关联，关联后，以后就可以直接git push，否则每次都需要git push origin dev指明具体推送本地哪个分支到远程库
+    git checkout -b dev：若远程git库没有dev分支，则用该命令在本地创建dev分支，推送时不能用git push，因为远程没有与本地dev关联的分支，因此需要显示调用git push --set-upstream origin dev，明确告知将当前分支设置关联到远端的dev（origin dev）分支，若远程没有则创建一个并与本地关联，--set-upstream参数意为进行关联，关联后，以后就可以直接git push，否则每次都需要git push origin dev指明将本地当前分支推动到具体哪个远程分支上（此处指明为远程dev分支，origin dev）
+    
+场景2: 你clone了git库，你同事也clone了git库，并且你们都在dev上工作，同事，他修改了文件并提交push了，然后你也对该文件进行了同一区域的修改，修改后你commit了，并且需要push，此时push会报冲突，解决方法如下：
+
+    git pull：冲突时往往会提示我们执行git pull将远程较新的版本拉到本地，然后在本地手动解决冲突后，重新提交push即可。不过，有时会报错“no tracking information for the current branch”，原因是没有指定本地dev分支与远程origin/dev分支的关联，此时只需要根据提示git branch --set-upstream-to=origin/<branch> dev设置关联后重新git pull即可；或者根据另一个提示git pull <remote> <branch>，显示指定将远程的哪个分支拉到本地
 
 # 标签管理
 
+标签总是和某个commit挂钩，如果这个commit既出现在master分支，又出现在dev分支，那么在这两个分支上都可以看到这个标签
+
+    git tag：查看所有标签信息
+    git show <tagname>：查看具体标签详细信息
+    git tag <tagname>：在当前分支最新提交的commit位置打上一个标签
+    git tag <tagname> <commit id>：在commit id处打上一个标签，主要用来对历史提交打标签
+    git tag -a <tagname> -m "describe" <commit id>：带描述信息的打标签操作
+    git push origin <tagname>：推送一个具体的本地标签到远程库
+    git push origin --tags：推送全部未推送过的本地标签到远程库
+    git tag -d <tagname>：删除一个本地标签
+    git push origin :refs/tags/<tagname>：删除一个远程标签，删除远程标签时，先删除本地标签
+
+# github使用
+
+github两大作用
+
+    免费远程仓库：可以将个人的开源项目放上去保管
+    开源协作社区：别人可以参与你的项目，你也可以参与别人的项目。比如你到别人项目处，点fork拷贝一份项目源码到自己到github上，然后从自己到github上clone一份到本地进行开发（必须是clone自己的，否则无法push），开发完成后push到自己的github上，并发起一个pull request请求，即请求原作者pull自己github上的代码进行合并
+    
+# 自定义git
+
+    git config --global color.ui true
+    .gitignore文件：该文件放在git工作区的根目录下，内容为需要过滤的文件，即不会被git维护的文件，该文件本身需要被git add管理
+    git add -f <file>：强制将文件加入git维护中，如果缺乏-f参数，且file又在.gitignore文件中被匹配到，那么会提示add失败
+    git check-ignore -v <file>：查找file具体被.gitignore的哪一行过滤掉了
+    
+# 配置别名
+
+    git config --global alias.st status：--global参数是全局参数，也就是这些命令在这台电脑的所有Git仓库下都有用
+    git config --global alias.unstage 'reset HEAD'
+    git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+    配置Git的时候，加上--global是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。每个仓库的Git配置文件都放在.git/config文件中，而当前用户的Git配置文件放在用户主目录下的一个隐藏文件.gitconfig中，通过命令配置的别名会被写入配置文件中，也可以在配置文件中相应的地方直接写上别名的配置
+    
+# 搭建git服务器
