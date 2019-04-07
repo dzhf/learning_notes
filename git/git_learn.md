@@ -163,7 +163,7 @@ Git的杀手级功能之一。找一台电脑充当服务器的角色，每天24
 
     git clone <addr>：克隆下来项目的git库
     git checkout -b dev origin/dev：默认克隆的git库在本地只能看到master分支，而开发需要在dev分支上进行，如果远程git库本来就有dev分支，则通过本条命令在本地创建dev分支，并与远程git库的dev分支关联
-    git checkout -b dev：若远程git库没有dev分支，则用该命令在本地创建dev分支，推送时不能用git push，因为远程没有与本地dev关联的分支，因此需要显示调用git push origin dev，明确告知将本地dev推送到远程，若远程没有则创建一个
+    git checkout -b dev：若远程git库没有dev分支，则用该命令在本地创建dev分支，推送时不能用git push，因为远程没有与本地dev关联的分支，因此需要显示调用git push --set-upstream origin dev，明确告知将本地dev推送到远程，若远程没有则创建一个并与本地关联，--set-upstream参数意为进行关联，关联后，以后就可以直接git push，否则每次都需要git push origin dev指明具体推送本地哪个分支到远程库
 
 
 
