@@ -30,6 +30,9 @@ uri_total_flux = "/v1.1/report/volume"
 uri_hit_flux = "/v1.0/report/hit_volume"
 uri_request_hit = "/v1.0/report/hit_request_number"
 
+def myfunc():
+    print(sys.version)
+
 def get_pull_interval():
     if len(sys.argv) == 3:
         start_time = timestamp(sys.argv[1], "%Y%m%d%H%M")
