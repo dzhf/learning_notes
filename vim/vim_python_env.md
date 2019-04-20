@@ -331,4 +331,3 @@ let g:Powerline_symbols = 'fancy'
 3. [Vim官方文档](http://www.vim.org/docs.php)
 4. [Open Vim](http://www.openvim.com/)
 5. [笨办法学Vimscript](http://learnvimscriptthehardway.stevelosh.com/) 是学习vimscript的极好材料。
-
