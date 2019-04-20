@@ -20,7 +20,7 @@
 
   若输出包含+python或+python3，则为支持python，例如本人输出如下，说明支持python3，而不支持系统自带的python：
 
-  ![my vim support python](/Users/zhanghaifeng/learn/learning_notes/vim/img/img1.png)
+  ![my vim support python](img/img1.png)
 
 * 在vim中查看python具体版本好，进一步确认vim支持python
 
@@ -30,7 +30,7 @@
 
   依次输入以上命令，首先vim进入vim中，然后进入命令模式输入第二条命令，如vim支持python，则会输出对应的版本号，如下：
 
-  ![img2](/Users/zhanghaifeng/learn/learning_notes/vim/img/img2.png)
+  ![img2](img/img2.png)
 
   > **注意**
   >
