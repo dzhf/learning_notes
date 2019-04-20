@@ -283,5 +283,52 @@ NERDTree提供了丰富的键盘操作方式来浏览和打开文件，介绍一
 
 ### 超级搜索
 
+想要在Vim中搜索任何文件？试试ctrlP插件吧：
 
+```
+Bundle 'kien/ctrlp.vim'
+```
+
+正如插件名，按Ctrl+P就可以进行搜索。更多信息，可以观看这个 [YouTube video](http://www.youtube.com/watch?v=9XrHk3xjYsw) .
+
+### git集成
+
+想要在Vim中执行基本的Git命令？vim-fugitive插件则是不二之选。
+
+```
+Bundle 'tpope/vim-fugitive'
+```
+
+请看Vimcasts的 [这部视频](http://vimcasts.org/episodes/fugitive-vim---a-complement-to-command-line-git/) ，了解更多情况。
+
+### Powerline状态栏
+
+Powerline是一个状态栏插件，可以显示当前的虚拟环境、Git分支、正在编辑的文件等信息。
+
+这个插件是用Python编写的，支持诸如zsh、bash、tmux和IPython等多种环境。
+
+```
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+```
+
+```
+" powerline
+set laststatus=2
+set guifont=PowerlineSymbols\ for\ Powerline
+set nocompatible
+set t_Co=256
+let g:Powerline_symbols = 'fancy'
+```
+
+请查阅插件的[官方文档](<https://github.com/powerline/powerline>)
+
+
+
+## vim学习资源
+
+1. [Vim Tutor](http://linuxcommand.org/man_pages/vimtutor1.html) 是Vim自带的程序，安装结束之后，只要在命令行输入 `vimtutor` 即可，程序将会用Vim编辑器教你如何使用Vim。
+2. [Vimcasts](http://vimcasts.org/) 是一系列的高阶视频教程，内容涉及许多Vim的功能。
+3. [Vim官方文档](http://www.vim.org/docs.php)
+4. [Open Vim](http://www.openvim.com/)
+5. [笨办法学Vimscript](http://learnvimscriptthehardway.stevelosh.com/) 是学习vimscript的极好材料。
 
