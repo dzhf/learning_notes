@@ -134,7 +134,7 @@ Bundle 'vim-scripts/indentpython.vim'
 
 ### 自动补全
 
-推荐使用YouCompleteMe插件进行自动补全，可见官网[详细安装过程](<https://github.com/Valloric/YouCompleteMe#mac-os-x>)
+推荐使用YouCompleteMe插件进行自动补全，可见官网[详细安装过程](<http://valloric.github.io/YouCompleteMe/#mac-os-x>)
 
 下面主要说明mac的安装过程：
 
@@ -167,6 +167,37 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 > ​	ctrl+o：后退
 >
 > ​	ctrl+i：前进
+
+YCM常用命令
+
+> Tab：向下循环选择函数
+>
+> shift+tab：向上循环选择函数
+>
+> ctrl+space: 任何情况下跳出提示，mac默认输入法切换也使用该快捷键，修改/关闭mac该快捷键即可；当然也可以直接在.vimrc文件中修改ycm的快捷键，命令如下：
+>
+> ```
+> let g:ycm_key_invoke_completion = '<C-Space>'
+> ```
+>
+> ### 
+
+### 括号补全
+
+可以使用[aoto-paris](<https://github.com/jiangmiao/auto-pairs>)
+
+```
+Bundle 'jiangmiao/auto-pairs'
+```
+
+### 函数参数补全
+
+可以使用jedi-vim
+
+```
+pip3 install jedi
+Bundle 'davidhalter/jedi-vim'
+```
 
 ### 支持Virtualenv虚拟环境
 
